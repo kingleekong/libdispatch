@@ -204,6 +204,7 @@ DISPATCH_ALWAYS_INLINE DISPATCH_CONST
 static inline dispatch_queue_t
 _dispatch_get_root_queue(long priority, bool overcommit)
 {
+	// 如果允许过载 根绝优先级返回队列
 	if (overcommit) switch (priority) {
 	case DISPATCH_QUEUE_PRIORITY_BACKGROUND:
 #if !DISPATCH_NO_BG_PRIORITY

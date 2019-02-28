@@ -449,6 +449,7 @@ _dispatch_root_queues_init_workq(void)
 			(void)dispatch_assume_zero(r);
 		}
 #endif
+		// DISPATCH_ROOT_QUEUE_COUNT == 8 最多创建8个
 		for (int i = 0; i < DISPATCH_ROOT_QUEUE_COUNT; i++) {
 			pthread_workqueue_t pwq = NULL;
 			struct dispatch_root_queue_context_s *qc =
@@ -1351,8 +1352,9 @@ dispatch_async_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 }
 
 #ifdef __BLOCKS__
-void
-dispatch_async(dispatch_queue_t dq, void (^work)(void))
+
+/// dispatch_async 声明部分
+void dispatch_async(dispatch_queue_t dq, void (^work)(void))
 {
 	dispatch_async_f(dq, _dispatch_Block_copy(work),
 			_dispatch_call_block_and_release);
